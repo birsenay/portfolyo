@@ -281,17 +281,28 @@
                 return;
             }
 
-            // Frontend-only login logic
-            if (username === 'birsenaykantar' && password === 'Bk2026!Secure') {
-                // Success - save to localStorage
-                localStorage.setItem('isLoggedIn', 'true');
-                window.location.href = 'index.html';
-            } else {
-                // Failure - show error
-                errorMessage.textContent = 'Kullanıcı adı veya şifre hatalı';
+            // Backend login logic
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password, rememberMe })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    window.location.href = '/admin/dashboard';
+                } else {
+                    errorMessage.textContent = data.message || 'Kullanıcı adı veya şifre hatalı';
+                    errorMessage.style.display = 'block';
+                    usernameInput.style.borderColor = 'var(--error-red)';
+                    passwordInput.style.borderColor = 'var(--error-red)';
+                }
+            } catch (err) {
+                errorMessage.textContent = 'Sunucuya bağlanılamadı. Node.js sunucusunun çalıştığından emin olun.';
                 errorMessage.style.display = 'block';
-                usernameInput.style.borderColor = 'var(--error-red)';
-                passwordInput.style.borderColor = 'var(--error-red)';
             }
         });
     </script>

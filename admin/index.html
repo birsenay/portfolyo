@@ -638,10 +638,15 @@
             });
         });
 
-        // Logout Flow - frontend only
-        document.getElementById('logoutBtn').addEventListener('click', () => {
+        // Logout Flow
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await fetch('/api/logout', { method: 'POST' });
+            } catch (err) {
+                console.error('Logout error', err);
+            }
             localStorage.removeItem('isLoggedIn');
-            window.location.href = 'login.html';
+            window.location.href = '/admin/login';
         });
 
         // Notification Helper
