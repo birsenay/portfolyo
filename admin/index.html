@@ -343,8 +343,10 @@
                     <input type="text" id="hero-words" class="form-control" placeholder="Geliştiriyorum, Öğreniyorum, Üretiyorum">
                 </div>
                 <div class="form-group">
-                    <label>Profil Fotoğrafı URL</label>
-                    <input type="text" id="hero-image" class="form-control" placeholder="Örn: https://hizliresim.com/... veya profil.jpg">
+                    <label>Profil Fotoğrafı Seç</label>
+                    <input type="file" id="hero-image-upload" class="form-control" accept="image/*">
+                    <small style="color: var(--text-light); display:block; margin-top:5px;">Mevcut fotoğrafı değiştirmek istemiyorsanız boş bırakın.</small>
+                    <img id="hero-image-preview" style="max-width: 100px; max-height: 100px; margin-top: 10px; display: none; border-radius: 50%;">
                 </div>
                 <button class="btn save-btn" data-section="hero">Kaydet</button>
             </div>
@@ -443,22 +445,23 @@
             });
         });
 
-        // Load data - frontend only (use localStorage for persistence)
-        function loadData() {
+        // Load data from server
+        async function loadData() {
             try {
-                const savedData = localStorage.getItem('siteData');
-                if (savedData) {
-                    siteData = JSON.parse(savedData);
+                const response = await fetch('/api/data');
+                if (response.ok) {
+                    siteData = await response.json();
                 } else {
-                    // Default empty data structure
-                    siteData = {
-                        hero: { name: '', subtitle: '', description: '', dynamicWords: [] },
-                        about: { paragraphs: ['', ''], learning: '' },
-                        skills: [{ tags: [] }],
-                        projects: [{ title: '', category: '', description: '', icon: '', link: '' }],
-                        contact: { email: '', linkedin: '', github: '', instagram: '' }
-                    };
+                    siteData = {};
                 }
+                
+                // Ensure default structure exists
+                if (!siteData.hero) siteData.hero = { name: '', subtitle: '', description: '', dynamicWords: [] };
+                if (!siteData.about) siteData.about = { paragraphs: ['', ''], learning: '' };
+                if (!siteData.skills) siteData.skills = [{ tags: [] }];
+                if (!siteData.projects) siteData.projects = [{ title: '', category: '', description: '', icon: '', link: '' }];
+                if (!siteData.contact) siteData.contact = { email: '', linkedin: '', github: '', instagram: '' };
+                
                 populateForms();
             } catch (err) {
                 showNotification('Veriler yüklenirken hata oluştu!', 'error');
@@ -473,7 +476,14 @@
                 document.getElementById('hero-subtitle').value = siteData.hero.subtitle || '';
                 document.getElementById('hero-desc').value = siteData.hero.description || '';
                 document.getElementById('hero-words').value = (siteData.hero.dynamicWords || []).join(', ');
-                document.getElementById('hero-image').value = siteData.hero.profileImage || '';
+                
+                const preview = document.getElementById('hero-image-preview');
+                if (siteData.hero.profileImage) {
+                    preview.src = siteData.hero.profileImage;
+                    preview.style.display = 'block';
+                } else {
+                    preview.style.display = 'none';
+                }
             }
             
             // About
@@ -548,6 +558,21 @@
             }
         };
 
+        // Handle Image Upload
+        document.getElementById('hero-image-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const preview = document.getElementById('hero-image-preview');
+                    preview.src = evt.target.result;
+                    preview.style.display = 'block';
+                    siteData.hero.profileImage = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
         // Save Functionality
         document.querySelectorAll('.save-btn').forEach(btn => {
             btn.addEventListener('click', async (e) => {
@@ -560,7 +585,7 @@
                     siteData.hero.subtitle = document.getElementById('hero-subtitle').value;
                     siteData.hero.description = document.getElementById('hero-desc').value;
                     siteData.hero.dynamicWords = document.getElementById('hero-words').value.split(',').map(w => w.trim()).filter(w => w);
-                    siteData.hero.profileImage = document.getElementById('hero-image').value;
+                    // profileImage is already updated via the file input change event
                 } else if (section === 'about') {
                     siteData.about.paragraphs = [
                         document.getElementById('about-p1').value,
@@ -588,10 +613,23 @@
                     });
                 }
 
-                // Frontend-only save - save to localStorage
+                // Send to backend API
                 try {
-                    localStorage.setItem('siteData', JSON.stringify(siteData));
-                    showNotification('Değişiklikler kaydedildi!');
+                    const response = await fetch('/api/data', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(siteData)
+                    });
+                    
+                    if (response.ok) {
+                        showNotification('Değişiklikler kaydedildi!');
+                    } else if (response.status === 401) {
+                        window.location.href = 'login.html'; // Redirect to login if session expired
+                    } else {
+                        throw new Error('Server error');
+                    }
                 } catch (err) {
                     showNotification('Veriler kaydedilirken hata oluştu!', 'error');
                 } finally {

@@ -114,11 +114,12 @@ const yearEl = document.getElementById("year");
 if(yearEl) yearEl.textContent = new Date().getFullYear();
 
 // ==========================================
-// DYNAMIC CONTENT LOADING FROM LOCALSTORAGE
+// DYNAMIC CONTENT LOADING FROM SERVER API
 // ==========================================
 async function loadDynamicContent() {
     try {
-        const data = JSON.parse(localStorage.getItem('siteData') || '{}');
+        const response = await fetch('/api/data');
+        const data = await response.json();
 
         // 1. Hero Section
         if (data.hero) {
