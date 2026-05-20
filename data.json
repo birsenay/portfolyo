@@ -1,0 +1,57 @@
+{
+  "hero": {
+    "name": "Birsenay Kantar",
+    "subtitle": "Bilgisayar Programcılığı Öğrencisi",
+    "description": "Kod yazmak benim için sadece bir beceri değil, aynı zamanda bir keşif süreci.",
+    "dynamicWords": [
+      "Geliştiriyorum",
+      "Öğreniyorum",
+      "Üretiyorum"
+    ]
+  },
+  "about": {
+    "paragraphs": [
+      "Teknolojiye ve yeni şeyler öğrenmeye olan merakım, beni yazılım dünyasıyla tanıştırdı. Bilgisayar Programcılığı alanındaki eğitimim boyunca temiz, sürdürülebilir ve estetik kod yazmanın önemini kavradım.",
+      "Kullanıcı deneyimini ön planda tutan, modern teknolojileri kullanarak projeler üretmekten keyif alıyorum. Gelişime her zaman açığım ve her projemle kendimi sınamayı seviyorum."
+    ],
+    "learning": "Modern Web Teknolojileri ve frameworkler üzerine odaklanıyorum."
+  },
+  "skills": [
+    {
+      "category": "Frontend",
+      "tags": ["HTML5", "CSS3", "JavaScript"]
+    },
+    {
+      "category": "Backend & Veritabanı",
+      "tags": ["SQL", "Veritabanı Mantığı"]
+    },
+    {
+      "category": "Araçlar",
+      "tags": ["Git / GitHub", "VS Code", "Figma"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "title": "Görev Yöneticisi Uygulaması",
+      "category": "Geliştirme",
+      "description": "Günlük görevleri listelemek ve takip etmek için HTML, CSS, ve JS ile yapılmış sade bir uygulama prototipi.",
+      "icon": "💻",
+      "style": "background:#f4f4fb"
+    },
+    {
+      "id": "2",
+      "title": "Kişisel Web Sitesi",
+      "category": "Tasarım",
+      "description": "Modern web teknolojilerini ve animasyonları kullanarak hayata geçirdiğim portfolyo sitem.",
+      "icon": "🎨",
+      "style": "background:#f2a6a620"
+    }
+  ],
+  "contact": {
+    "email": "birsenaykantar@gmail.com",
+    "linkedin": "https://linkedin.com/in/birsenaykantar",
+    "github": "https://github.com/birsenay",
+    "instagram": "https://instagram.com/birsenaykantar"
+  }
+}

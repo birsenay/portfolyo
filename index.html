@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birsenay Kantar — Portfolyo</title>
+    <meta name="description" content="Birsenay Kantar, Bilgisayar Programcılığı Öğrencisi.">
+    <link rel="icon" href="logo.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <header class="header" id="header">
+        <div class="container nav-container">
+            <a href="#home" class="logo" style="display:flex; align-items:center;">
+                <img src="logo.svg" alt="BK Logo" style="height:38px; width:38px;">
+            </a>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#about" class="nav-link">Hakkımda</a></li>
+                    <li><a href="#skills" class="nav-link">Yetenekler</a></li>
+                    <li><a href="#projects" class="nav-link">Projeler</a></li>
+                    <li><a href="#contact" class="nav-link">İletişim</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero section">
+            <div class="container hero-container grid-2-col">
+                <div class="hero-content fade-in-up">
+                    <span class="greeting">Merhaba, ben</span>
+                    <h1 class="title">Birsenay <span class="gradient-text">Kantar</span></h1>
+                    <h2 class="subtitle">Bilgisayar Programcılığı Öğrencisi</h2>
+                    <p class="description">Kod yazmak benim için sadece bir beceri değil, aynı zamanda bir keşif süreci.</p>
+                    
+                    <div class="dynamic-text-wrapper">
+                        <span>Şu an aktif olarak&nbsp;</span>
+                        <div class="dynamic-text">
+                            <span class="word active">Geliştiriyorum</span>
+                            <span class="word">Öğreniyorum</span>
+                            <span class="word">Üretiyorum</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-group">
+                        <a href="#projects" class="btn btn-primary">Projelerimi Keşfet</a>
+                        <a href="#contact" class="btn btn-secondary">İletişime Geç</a>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper fade-in-up delay-1">
+                    <div class="image-bg-shape"></div>
+                    <img src="profile.jpg" alt="Birsenay Kantar" class="hero-image" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Birsenay+Kantar&background=7C6CF2&color=fff&size=500';">
+                </div>
+            </div>
+            
+            <div class="scroll-indicator">
+                <a href="#about">
+                    <span class="mouse">
+                        <span class="wheel"></span>
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <section id="about" class="about section">
+            <div class="container">
+                <div class="section-title fade-in-up">
+                    <h2>Hakkımda</h2>
+                    <p>Beni biraz daha yakından tanıyın.</p>
+                </div>
+                <div class="about-content grid-2-col fade-in-up">
+                    <div class="about-text">
+                        <p>Teknolojiye ve yeni şeyler öğrenmeye olan merakım, beni yazılım dünyasıyla tanıştırdı. Bilgisayar Programcılığı alanındaki eğitimim boyunca temiz, sürdürülebilir ve estetik kod yazmanın önemini kavradım.</p>
+                        <p>Kullanıcı deneyimini ön planda tutan, modern teknolojileri kullanarak projeler üretmekten keyif alıyorum. Gelişime her zaman açığım ve her projemle kendimi sınamayı seviyorum.</p>
+                        
+                        <div class="learning-badge mt-4">
+                            <span class="icon">✨</span>
+                            <strong>Şu An Neler Öğreniyorum:</strong> Modern Web Teknolojileri ve frameworkler üzerine odaklanıyorum.
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        <h3 class="timeline-title">Deneyim & Eğitim</h3>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="timeline-date">Devam Ediyor</span>
+                            <h4>Bilgisayar Programcılığı</h4>
+                            <p>Eğitim</p>
+                            <p class="timeline-desc">Modern yazılım prensipleri, algoritmik düşünce ve veritabanı sistemleri üzerine eğitim.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <span class="timeline-date">Yakın Zamanda</span>
+                            <h4>Gelişim Yolculuğu</h4>
+                            <p>Kendi Kendine Öğrenme</p>
+                            <p class="timeline-desc">Kişisel projeler geliştirerek pratiğimi arttırıyor ve yeni şeyler öğreniyorum.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="skills section bg-alt">
+            <div class="container">
+                <div class="section-title fade-in-up">
+                    <h2>Yetenekler</h2>
+                    <p>Öğrendiğim ve kullandığım teknolojiler.</p>
+                </div>
+                <div class="skills-grid fade-in-up">
+                    <div class="skill-category">
+                        <h3>Frontend</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">HTML5</span>
+                            <span class="skill-tag">CSS3</span>
+                            <span class="skill-tag">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Backend & Veritabanı</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">Veritabanı Mantığı</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Araçlar</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Git / GitHub</span>
+                            <span class="skill-tag">VS Code</span>
+                            <span class="skill-tag">Figma</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects section">
+            <div class="container">
+                <div class="section-title fade-in-up">
+                    <h2>Projeler</h2>
+                    <p>Kendimi geliştirirken yaptığım çalışmalar.</p>
+                </div>
+                <div class="project-grid fade-in-up">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <div class="image-placeholder"><span style="font-size:3rem;">💻</span></div>
+                            <div class="project-overlay">
+                                <a href="#" class="view-btn">İncele</a>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <span class="project-category">Geliştirme</span>
+                            <h3 class="project-title">Görev Yöneticisi Uygulaması</h3>
+                            <p class="project-desc">Günlük görevleri listelemek ve takip etmek için HTML, CSS, ve JS ile yapılmış sade bir uygulama prototipi.</p>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <div class="image-placeholder" style="background:#f2a6a620"><span style="font-size:3rem;">🎨</span></div>
+                            <div class="project-overlay">
+                                <a href="#" class="view-btn">İncele</a>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <span class="project-category">Tasarım</span>
+                            <h3 class="project-title">Kişisel Web Sitesi</h3>
+                            <p class="project-desc">Modern web teknolojilerini ve animasyonları kullanarak hayata geçirdiğim portfolyo sitem.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact section bg-alt">
+            <div class="container">
+                <div class="contact-card fade-in-up">
+                    <h2>Yeni Fırsatlar?</h2>
+                    <p>Proje fikirleriniz varsa veya sadece "Merhaba" demek isterseniz benimle iletişime geçebilirsiniz.</p>
+                    
+                    <div class="highlight-box mt-4">
+                        "Yeni fırsatlara açığım ve kendimi geliştirebileceğim projelerde yer almak istiyorum."
+                    </div>
+
+                    <div class="contact-methods mt-4">
+                        <a href="mailto:birsenaykantar@gmail.com" class="btn btn-primary btn-icon">E-posta Gönder</a>
+                    
+                    </div>
+
+                    <div class="social-links mt-4">
+                        <a href="https://linkedin.com/in/birsenaykantar" target="_blank" class="social-icon-modern" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
+                        <a href="https://github.com/birsenay" target="_blank" class="social-icon-modern" aria-label="GitHub">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        </a>
+                        <a href="https://instagram.com/birsenaykantar" target="_blank" class="social-icon-modern" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <p class="brand-text">Kodla üretilen bir rüya ✨</p>
+            </div>
+            <div class="footer-socials">
+                <a href="#" class="social-icon">IN</a>
+                <a href="#" class="social-icon">GH</a>
+                <a href="#" class="social-icon">TW</a>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; <span id="year"></span> Birsenay Kantar.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

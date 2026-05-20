@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli | Birsenay Kantar</title>
+    <!-- Logo as Favicon -->
+    <link rel="icon" href="../logo.svg" type="image/svg+xml">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-soft: #7C6CF2;
+            --primary-hover: #6753e4;
+            --bg-color: #f3f4f6;
+            --sidebar-bg: #ffffff;
+            --card-bg: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-header img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .sidebar-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+        }
+
+        .nav {
+            flex: 1;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary-soft);
+            background: rgba(124, 108, 242, 0.05);
+            border-right: 3px solid var(--primary-soft);
+        }
+
+        .sidebar-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 10px;
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-logout:hover {
+            background: #faecec;
+            color: var(--error);
+            border-color: #f7d4d4;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px;
+            max-width: 1000px;
+        }
+
+        .top-bar {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-soft);
+            box-shadow: 0 0 0 3px rgba(124, 108, 242, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: var(--primary-soft);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-outline:hover {
+            background: var(--bg-color);
+        }
+
+        .btn-danger {
+            background: #fee2e2;
+            color: var(--error);
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        .btn-danger:hover {
+            background: #fecaca;
+        }
+
+        .section-container {
+            display: none;
+        }
+
+        .section-container.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Lists */
+        .list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: var(--success);
+        }
+
+        .notification.error {
+            background: var(--error);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="../logo.svg" alt="Logo">
+            <h2>Admin Paneli</h2>
+        </div>
+        <nav class="nav">
+            <a class="nav-item active" data-target="hero-section">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Ana Kısım (Hero)
+            </a>
+            <a class="nav-item" data-target="about-section">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Hakkımda
+            </a>
+            <a class="nav-item" data-target="skills-section">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Yetenekler
+            </a>
+            <a class="nav-item" data-target="projects-section">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                Projeler
+            </a>
+            <a class="nav-item" data-target="contact-section">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                İletişim
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                Çıkış Yap
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="top-bar">
+            <h1>Hoş geldin, Birsenay 👋</h1>
+            <a href="/" target="_blank" class="btn btn-outline" style="text-decoration:none;">Siteyi Görüntüle ↗</a>
+        </div>
+
+        <!-- HERO SECTION -->
+        <div id="hero-section" class="section-container active">
+            <div class="card">
+                <div class="card-header">Ana Kısım (Hero) Ayarları</div>
+                <div class="form-group">
+                    <label>Başlık (İsim)</label>
+                    <input type="text" id="hero-name" class="form-control" placeholder="Örn: Birsenay Kantar">
+                </div>
+                <div class="form-group">
+                    <label>Alt Başlık</label>
+                    <input type="text" id="hero-subtitle" class="form-control" placeholder="Örn: Bilgisayar Programcılığı Öğrencisi">
+                </div>
+                <div class="form-group">
+                    <label>Açıklama</label>
+                    <textarea id="hero-desc" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Dinamik Kayan Kelimeler (Virgülle ayırın)</label>
+                    <input type="text" id="hero-words" class="form-control" placeholder="Geliştiriyorum, Öğreniyorum, Üretiyorum">
+                </div>
+                <button class="btn save-btn" data-section="hero">Kaydet</button>
+            </div>
+        </div>
+
+        <!-- ABOUT SECTION -->
+        <div id="about-section" class="section-container">
+            <div class="card">
+                <div class="card-header">Hakkımda Ayarları</div>
+                <div class="form-group">
+                    <label>Paragraf 1</label>
+                    <textarea id="about-p1" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Paragraf 2</label>
+                    <textarea id="about-p2" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Şu an ne öğreniyorum (Rozet metni)</label>
+                    <input type="text" id="about-learning" class="form-control">
+                </div>
+                <button class="btn save-btn" data-section="about">Kaydet</button>
+            </div>
+        </div>
+
+        <!-- SKILLS SECTION -->
+        <div id="skills-section" class="section-container">
+            <div class="card">
+                <div class="card-header">Yetenekler</div>
+                <p style="font-size: 13px; color: var(--text-light); margin-bottom: 16px;">Yetenek etiketlerini virgülle ayırarak yazın.</p>
+                <div id="skills-container"></div>
+                <button class="btn save-btn" data-section="skills" style="margin-top:20px;">Kaydet</button>
+            </div>
+        </div>
+
+        <!-- PROJECTS SECTION -->
+        <div id="projects-section" class="section-container">
+            <div class="card">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items:center;">
+                    Projeler
+                    <button class="btn btn-outline" style="font-size: 13px; padding: 6px 12px;" onclick="addProjectRow()">+ Yeni Proje Ekle</button>
+                </div>
+                <div id="projects-container"></div>
+                <button class="btn save-btn" data-section="projects" style="margin-top:20px;">Kaydet</button>
+            </div>
+        </div>
+
+        <!-- CONTACT SECTION -->
+        <div id="contact-section" class="section-container">
+            <div class="card">
+                <div class="card-header">İletişim & Sosyal Medya</div>
+                <div class="form-group">
+                    <label>E-posta Adresi</label>
+                    <input type="email" id="contact-email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>LinkedIn URL</label>
+                    <input type="text" id="contact-linkedin" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>GitHub URL</label>
+                    <input type="text" id="contact-github" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Instagram URL</label>
+                    <input type="text" id="contact-instagram" class="form-control">
+                </div>
+                <button class="btn save-btn" data-section="contact">Kaydet</button>
+            </div>
+        </div>
+
+    </main>
+
+    <div id="notification" class="notification">Değişiklikler kaydedildi!</div>
+
+    <script>
+        // Check Auth immediately - frontend only
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        // Current overall data
+        let siteData = {};
+
+        // Navigation Logic
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.section-container');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navItems.forEach(n => n.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+                
+                item.classList.add('active');
+                document.getElementById(item.getAttribute('data-target')).classList.add('active');
+            });
+        });
+
+        // Load data - frontend only (use localStorage for persistence)
+        function loadData() {
+            try {
+                const savedData = localStorage.getItem('siteData');
+                if (savedData) {
+                    siteData = JSON.parse(savedData);
+                } else {
+                    // Default empty data structure
+                    siteData = {
+                        hero: { name: '', subtitle: '', description: '', dynamicWords: [] },
+                        about: { paragraphs: ['', ''], learning: '' },
+                        skills: [{ tags: [] }],
+                        projects: [{ title: '', category: '', description: '', icon: '', link: '' }],
+                        contact: { email: '', linkedin: '', github: '', instagram: '' }
+                    };
+                }
+                populateForms();
+            } catch (err) {
+                showNotification('Veriler yüklenirken hata oluştu!', 'error');
+            }
+        }
+
+        // Populate forms with loaded data
+        function populateForms() {
+            // Hero
+            if (siteData.hero) {
+                document.getElementById('hero-name').value = siteData.hero.name || '';
+                document.getElementById('hero-subtitle').value = siteData.hero.subtitle || '';
+                document.getElementById('hero-desc').value = siteData.hero.description || '';
+                document.getElementById('hero-words').value = (siteData.hero.dynamicWords || []).join(', ');
+            }
+            
+            // About
+            if (siteData.about) {
+                document.getElementById('about-p1').value = (siteData.about.paragraphs && siteData.about.paragraphs[0]) ? siteData.about.paragraphs[0] : '';
+                document.getElementById('about-p2').value = (siteData.about.paragraphs && siteData.about.paragraphs[1]) ? siteData.about.paragraphs[1] : '';
+                document.getElementById('about-learning').value = siteData.about.learning || '';
+            }
+
+            // Skills
+            const skillsContainer = document.getElementById('skills-container');
+            skillsContainer.innerHTML = '';
+            if (siteData.skills) {
+                siteData.skills.forEach((skillGroup, index) => {
+                    skillsContainer.innerHTML += `
+                        <div class="form-group" style="background:#f9fafb; padding:16px; border-radius:8px; border:1px solid var(--border-color);">
+                            <label style="font-weight:600;">${skillGroup.category}</label>
+                            <input type="text" class="form-control skill-input" data-index="${index}" value="${(skillGroup.tags || []).join(', ')}">
+                        </div>
+                    `;
+                });
+            }
+
+            // Contact
+            if(siteData.contact) {
+                document.getElementById('contact-email').value = siteData.contact.email || '';
+                document.getElementById('contact-linkedin').value = siteData.contact.linkedin || '';
+                document.getElementById('contact-github').value = siteData.contact.github || '';
+                document.getElementById('contact-instagram').value = siteData.contact.instagram || '';
+            }
+
+            // Projects
+            renderProjects();
+        }
+
+        function renderProjects() {
+            const container = document.getElementById('projects-container');
+            container.innerHTML = '';
+            if (siteData.projects) {
+                siteData.projects.forEach((proj, index) => {
+                    container.innerHTML += `
+                        <div class="list-item" style="flex-direction:column; align-items:flex-start; gap:10px;">
+                            <div style="display:flex; justify-content:space-between; width:100%;">
+                                <div style="font-weight:600;">Proje ${index + 1}</div>
+                                <button class="btn btn-danger" onclick="deleteProject(${index})">Sil</button>
+                            </div>
+                            <div style="width:100%; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                                <input type="text" class="form-control" placeholder="Başlık" id="proj-title-${index}" value="${proj.title || ''}">
+                                <input type="text" class="form-control" placeholder="Kategori" id="proj-cat-${index}" value="${proj.category || ''}">
+                            </div>
+                            <input type="text" class="form-control" placeholder="Açıklama" id="proj-desc-${index}" value="${proj.description || ''}">
+                            <div style="width:100%; display:grid; grid-template-columns: 100px 1fr; gap:10px;">
+                                <input type="text" class="form-control" placeholder="İkon (Emoji)" id="proj-icon-${index}" value="${proj.icon || ''}">
+                                <input type="text" class="form-control" placeholder="Link" id="proj-link-${index}" value="${proj.link || ''}">
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        window.addProjectRow = function() {
+            if(!siteData.projects) siteData.projects = [];
+            siteData.projects.push({ title: '', category: '', description: '', icon: '💻', link: '' });
+            renderProjects();
+        };
+
+        window.deleteProject = function(index) {
+            if(confirm('Bu projeyi silmek istediğinizden emin misiniz?')) {
+                siteData.projects.splice(index, 1);
+                renderProjects();
+            }
+        };
+
+        // Save Functionality
+        document.querySelectorAll('.save-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const section = e.target.getAttribute('data-section');
+                btn.textContent = 'Kaydediliyor...';
+                
+                // Update local siteData object based on section
+                if (section === 'hero') {
+                    siteData.hero.name = document.getElementById('hero-name').value;
+                    siteData.hero.subtitle = document.getElementById('hero-subtitle').value;
+                    siteData.hero.description = document.getElementById('hero-desc').value;
+                    siteData.hero.dynamicWords = document.getElementById('hero-words').value.split(',').map(w => w.trim()).filter(w => w);
+                } else if (section === 'about') {
+                    siteData.about.paragraphs = [
+                        document.getElementById('about-p1').value,
+                        document.getElementById('about-p2').value
+                    ];
+                    siteData.about.learning = document.getElementById('about-learning').value;
+                } else if (section === 'skills') {
+                    const inputs = document.querySelectorAll('.skill-input');
+                    inputs.forEach(input => {
+                        const idx = input.getAttribute('data-index');
+                        siteData.skills[idx].tags = input.value.split(',').map(w => w.trim()).filter(w => w);
+                    });
+                } else if (section === 'contact') {
+                    siteData.contact.email = document.getElementById('contact-email').value;
+                    siteData.contact.linkedin = document.getElementById('contact-linkedin').value;
+                    siteData.contact.github = document.getElementById('contact-github').value;
+                    siteData.contact.instagram = document.getElementById('contact-instagram').value;
+                } else if (section === 'projects') {
+                    siteData.projects.forEach((proj, index) => {
+                        proj.title = document.getElementById(`proj-title-${index}`).value;
+                        proj.category = document.getElementById(`proj-cat-${index}`).value;
+                        proj.description = document.getElementById(`proj-desc-${index}`).value;
+                        proj.icon = document.getElementById(`proj-icon-${index}`).value;
+                        proj.link = document.getElementById(`proj-link-${index}`).value;
+                    });
+                }
+
+                // Frontend-only save - save to localStorage
+                try {
+                    localStorage.setItem('siteData', JSON.stringify(siteData));
+                    showNotification('Değişiklikler kaydedildi!');
+                } catch (err) {
+                    showNotification('Veriler kaydedilirken hata oluştu!', 'error');
+                } finally {
+                    btn.textContent = 'Kaydet';
+                }
+            });
+        });
+
+        // Logout Flow - frontend only
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'login.html';
+        });
+
+        // Notification Helper
+        function showNotification(message, type = 'success') {
+            const notif = document.getElementById('notification');
+            notif.textContent = message;
+            notif.className = `notification show ${type}`;
+            setTimeout(() => {
+                notif.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize
+        loadData();
+    </script>
+</body>
+</html>

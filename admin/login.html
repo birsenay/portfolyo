@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Girişi | Birsenay Kantar</title>
+    <!-- Logo as Favicon -->
+    <link rel="icon" href="../logo.svg" type="image/svg+xml">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-soft: #7C6CF2; /* Soft purple from main site */
+            --primary-hover: #6753e4;
+            --bg-color: #f7f8fb;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --error-red: #ef4444;
+            --border-color: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top right, rgba(124, 108, 242, 0.08), transparent 400px),
+                              radial-gradient(circle at bottom left, rgba(236, 72, 153, 0.05), transparent 400px);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-dark);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14px;
+            background: #ffffff;
+            color: var(--text-dark);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-soft);
+            box-shadow: 0 0 0 4px rgba(124, 108, 242, 0.1);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary-soft);
+        }
+
+        .error-message {
+            color: var(--error-red);
+            background: rgba(239, 68, 68, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none; /* hidden by default */
+            animation: fadeIn 0.3s ease;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-soft);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(124, 108, 242, 0.3);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .footer-note {
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--text-light);
+            font-size: 12px;
+        }
+
+        .footer-note svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-light);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <!-- Assuming logo.svg exists in the parent directory based on previous files -->
+        <img src="../logo.svg" alt="BK Logo" class="logo">
+        
+        <h1>Admin Girişi</h1>
+        <p class="subtitle">Yönetim paneline erişmek için giriş yapın</p>
+
+        <div id="errorMessage" class="error-message">
+            Kullanıcı adı veya şifre hatalı
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Kullanıcı Adı</label>
+                <input type="text" id="username" class="form-control" placeholder="Kullanıcı adınızı girin" autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Şifre</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" class="form-control" placeholder="Şifrenizi girin" autocomplete="current-password">
+                    <button type="button" class="toggle-password" aria-label="Şifreyi Göster" id="togglePassword">
+                        <!-- Eye Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group" style="display: flex; align-items: center; gap: 8px; margin-bottom: 24px;">
+                <input type="checkbox" id="rememberMe" style="width: 16px; height: 16px; accent-color: var(--primary-soft); cursor: pointer;">
+                <label for="rememberMe" style="margin-bottom: 0; font-size: 13px; font-weight: 500; cursor: pointer;">Beni Hatırla</label>
+            </div>
+
+            <button type="submit" class="btn-login">Giriş Yap</button>
+        </form>
+
+        <div class="footer-note">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Bu alan sadece yetkili kullanıcı içindir
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('errorMessage');
+        const togglePassword = document.getElementById('togglePassword');
+
+        // Toggle Password Visibility
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Switch icon based on state
+            if (type === 'text') {
+                togglePassword.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+            } else {
+                togglePassword.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+            }
+        });
+
+        // Form Validation & Login Logic
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Reset error
+            errorMessage.style.display = 'none';
+            errorMessage.textContent = '';
+            usernameInput.style.borderColor = 'var(--border-color)';
+            passwordInput.style.borderColor = 'var(--border-color)';
+
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            let hasError = false;
+
+            if (!username) {
+                usernameInput.style.borderColor = 'var(--error-red)';
+                hasError = true;
+            }
+            if (!password) {
+                passwordInput.style.borderColor = 'var(--error-red)';
+                hasError = true;
+            }
+
+            if (hasError) {
+                errorMessage.textContent = 'Lütfen tüm alanları doldurun.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Frontend-only login logic
+            if (username === 'birsenaykantar' && password === 'Bk2026!Secure') {
+                // Success - save to localStorage
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'index.html';
+            } else {
+                // Failure - show error
+                errorMessage.textContent = 'Kullanıcı adı veya şifre hatalı';
+                errorMessage.style.display = 'block';
+                usernameInput.style.borderColor = 'var(--error-red)';
+                passwordInput.style.borderColor = 'var(--error-red)';
+            }
+        });
+    </script>
+</body>
+</html>
