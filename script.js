@@ -133,6 +133,19 @@ async function loadDynamicContent() {
             if(subtitleEl) subtitleEl.textContent = data.hero.subtitle;
             const descEl = document.querySelector('.hero .description');
             if(descEl) descEl.textContent = data.hero.description;
+            
+            const heroImageEl = document.querySelector('.hero-image');
+            if(heroImageEl) {
+                if(data.hero.profileImage) {
+                    heroImageEl.src = data.hero.profileImage;
+                }
+                // Update fallback avatar based on current name
+                const fallbackName = encodeURIComponent(data.hero.name || 'Birsenay Kantar');
+                heroImageEl.onerror = function() {
+                    this.onerror = null;
+                    this.src = 'https://ui-avatars.com/api/?name=' + fallbackName + '&background=7C6CF2&color=fff&size=500';
+                };
+            }
 
             // Rebuild dynamic words
             const dynamicTextContainer = document.querySelector('.dynamic-text');

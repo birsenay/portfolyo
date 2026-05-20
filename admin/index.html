@@ -342,6 +342,10 @@
                     <label>Dinamik Kayan Kelimeler (Virgülle ayırın)</label>
                     <input type="text" id="hero-words" class="form-control" placeholder="Geliştiriyorum, Öğreniyorum, Üretiyorum">
                 </div>
+                <div class="form-group">
+                    <label>Profil Fotoğrafı URL</label>
+                    <input type="text" id="hero-image" class="form-control" placeholder="Örn: https://hizliresim.com/... veya profil.jpg">
+                </div>
                 <button class="btn save-btn" data-section="hero">Kaydet</button>
             </div>
         </div>
@@ -469,6 +473,7 @@
                 document.getElementById('hero-subtitle').value = siteData.hero.subtitle || '';
                 document.getElementById('hero-desc').value = siteData.hero.description || '';
                 document.getElementById('hero-words').value = (siteData.hero.dynamicWords || []).join(', ');
+                document.getElementById('hero-image').value = siteData.hero.profileImage || '';
             }
             
             // About
@@ -555,6 +560,7 @@
                     siteData.hero.subtitle = document.getElementById('hero-subtitle').value;
                     siteData.hero.description = document.getElementById('hero-desc').value;
                     siteData.hero.dynamicWords = document.getElementById('hero-words').value.split(',').map(w => w.trim()).filter(w => w);
+                    siteData.hero.profileImage = document.getElementById('hero-image').value;
                 } else if (section === 'about') {
                     siteData.about.paragraphs = [
                         document.getElementById('about-p1').value,
